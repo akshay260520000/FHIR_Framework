@@ -12,31 +12,28 @@ spark = SparkSession.builder \
     .appName("PySpark Read JSON") \
     .getOrCreate()
 
-
-
-with open('/workspaces/codespaces-blank/Config_files/hcs_config.json') as config_file:
+with open('/workspaces/FHIR_Framework/Config_files/hcs_config.json') as config_file:
     config=json.load(config_file)["Source_Schema"]
 
-# config=config.decode('utf-8')
-# config=json.loads(config)
-# schema = config["schema"]
+
 schema = StructType.fromJson(config)
-# targetschema = config["targetschema"]
 
-
-input_path ='/workspaces/codespaces-blank/Input_data_files/hcs_json.json'
-
+input_path ='/workspaces/FHIR_Framework/Input_data_files/hcs_json.json'
 
 hcs_df = spark.read.schema(schema).format("json").option("multiLine", "true").load(input_path)
 hcs_df.printSchema()
 hcs_df.show(truncate=False)
 
-# print('---------------------Target Schema-----------------')
-# targetschema_df = hcs_df.select(*(targetschema))
-# targetschema_df.show(truncate=False)
+print('---------------------Target Schema-----------------')
+with open('/workspaces/FHIR_Framework/Config_files/hcs_config.json') as config_file:
+    targetschema=json.load(config_file)["targetschema"]
+targetschema_df = hcs_df.select(*(targetschema))
+targetschema_df.show(truncate=False)
 
-# print("-------------------------Explode Level 1------------------")
-# explode1 = config["explode_1"]
-# explode1_df = targetschema_df.withColumn("{str(explode1)}",explode_outer(explode1)).drop(col("{str(explode1)}"))
-# explode1_df.show(truncate=False)
+print("-------------------------Explode Level 1------------------")
+with open('/workspaces/FHIR_Framework/Config_files/hcs_config.json') as config_file:
+    explode1=json.load(config_file)["explode_1"]
 
+
+explode1_df = targetschema_df.withColumn(f"new_{explode1}",explode_outer(explode1)).drop(col(f"{explode1}"))
+explode1_df.show(truncate=False)
