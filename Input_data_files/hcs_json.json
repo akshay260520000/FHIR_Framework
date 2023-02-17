@@ -7,7 +7,17 @@
 		"profile": [
 			"http://bpd.bcbs.com/StructureDefinition/bpd-healthcareservice-plan-submission",
 			"http://bpd.bcbs.com/StructureDefinition/"
+		],
+		"Features":[
+			"This is trial",
+			"Just trying",
+			"Testing replicacy"
+		],
+		"healthdata":[
+			"health check",
+			"This is only check"
 		]
+
 		
 	}
 }

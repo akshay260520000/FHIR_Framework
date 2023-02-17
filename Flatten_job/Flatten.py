@@ -35,5 +35,7 @@ targetschema_df.show(truncate=False)
 
 print("-------------------------Explode Level 1------------------")
 explode1 = con["explode_1"]
-explode1_df = targetschema_df.withColumn(f"new_{explode1}",explode_outer(explode1)).drop(col(f"{explode1}"))
-explode1_df.show(truncate=False)
+
+for i in explode1:
+    targetschema_df = targetschema_df.withColumn(f"new_{i}",explode_outer(i)).drop(col(f"{i}"))
+targetschema_df.show()
