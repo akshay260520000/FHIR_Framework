@@ -1,0 +1,54 @@
+{
+    "Source_Schema":
+        {
+            "fields": [
+                {
+                    "metadata": {},
+                    "name": "resourceType",
+                    "nullable": true,
+                    "type": "string"
+                },
+                {
+                    "metadata": {},
+                    "name": "id",
+                    "nullable": true,
+                    "type": "string"
+                },
+                {
+                    "metadata": {},
+                    "name": "meta",
+                    "nullable": true,
+                    "type": {
+                        "fields": [
+                            {
+                                "metadata": {},
+                                "name": "versionId",
+                                "nullable": true,
+                                "type": "string"
+                            },
+                            {
+                                "metadata": {},
+                                "name": "lastUpdated",
+                                "nullable": true,
+                                "type": "string"
+                            },
+                            {
+                                "metadata": {},
+                                "name": "profile",
+                                "nullable": true,
+                                "type": {
+                                    "containsNull": true,
+                                    "elementType": "string",
+                                    "type": "array"
+                                }
+                            }
+                        ],
+                        "type": "struct"
+                    }
+                }
+            ],
+            "type": "struct"
+        },
+    "targetschema": ["resourceType", "id", "meta.versionId", "meta.lastUpdated", "meta.profile"],
+    "explode_1": "[meta.profile]"
+    }
