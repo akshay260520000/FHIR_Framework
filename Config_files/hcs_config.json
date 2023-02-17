@@ -41,6 +41,26 @@
                                     "elementType": "string",
                                     "type": "array"
                                 }
+                            },
+                            {
+                                "metadata": {},
+                                "name": "Features",
+                                "nullable": true,
+                                "type": {
+                                    "containsNull": true,
+                                    "elementType": "string",
+                                    "type": "array"
+                                }
+                            },
+                            {
+                                "metadata": {},
+                                "name": "healthdata",
+                                "nullable": true,
+                                "type": {
+                                    "containsNull": true,
+                                    "elementType": "string",
+                                    "type": "array"
+                                }
                             }
                         ],
                         "type": "struct"
