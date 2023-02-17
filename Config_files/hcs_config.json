@@ -50,5 +50,5 @@
             "type": "struct"
         },
     "targetschema": ["resourceType", "id", "meta.versionId", "meta.lastUpdated", "meta.profile"],
-    "explode_1": "[meta.profile]"
+    "explode_1": "profile"
     }
