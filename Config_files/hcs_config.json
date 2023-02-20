@@ -131,7 +131,11 @@
           }
         ]
       },
-    "targetschema": ["resourceType", "id", "meta.versionId", "meta.lastUpdated", "meta.profile","meta.Features","meta.healthdata"],
-    "explode_1": ["profile","Features","healthdata"]
+    "targetschema1": ["resourceType", "id", "meta.versionId", "meta.lastUpdated", "meta.profile","meta.Features","meta.healthdata","extension"],
+    "explode_1": ["profile","Features","healthdata","extension"],
+    "targetschema2":["new_extension.url","new_extension.valueCodeableConcept.coding"],
+    "explode_2":["coding"]
+    
+    
     
     }

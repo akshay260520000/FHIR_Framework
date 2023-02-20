@@ -29,8 +29,8 @@ hcs_df.printSchema()
 hcs_df.show(truncate=False)
 
 print('---------------------Target Schema-----------------')
-targetschema = con["targetschema"]
-targetschema_df = hcs_df.select(*(targetschema))
+targetschema1 = con["targetschema1"]
+targetschema_df = hcs_df.select(*(targetschema1))
 targetschema_df.show(truncate=False)
 
 print("-------------------------Explode Level 1------------------")
@@ -38,4 +38,14 @@ explode1 = con["explode_1"]
 
 for column in explode1:
     targetschema_df = targetschema_df.withColumn(f"new_{column}",explode_outer(column)).drop(col(f"{column}"))
+targetschema_df.show(5)  
+
+# Targetschema2:
+targetschema2 = con["targetschema2"]
+targetschema_df=targetschema_df.select("*",*(targetschema2))
 targetschema_df.show()
+print("-------------------------Explode Level 2------------------")
+explode2 = con["explode_2"]
+for column in explode2:
+    targetschema_df = targetschema_df.withColumn(f"new_{column}",explode_outer(column)).drop(col(f"{column}"))
+targetschema_df.show(5)
