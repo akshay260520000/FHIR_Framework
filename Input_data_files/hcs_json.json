@@ -17,19 +17,56 @@
 			"health check",
 			"This is only check"
 			
-		],
-		"DoubleArray":[
-			[
-				"coding is like checking",
-				"lets check"
-			],
-			[
-				"Doublearray check",
-				"letstry"
-			]
 		]
-		
-
-		
-	}
+	},
+	"extension" : [
+		{
+		  "url" : "http://bpd.bcbs.com/StructureDefinition/geocodereturn",
+		  "valueCodeableConcept" : {
+			"coding" : [
+			  {
+				"system" : "http://bpd.bcbs.com/CodeSystem/BCBSGeocodeReturnCodeCS",
+				"code" : "Z",
+				"display" : "Street level"
+			  }
+			]
+		  }
+		},
+		{
+		  "url" : "http://bpd.bcbs.com/StructureDefinition/servicearea",
+		  "valueCodeableConcept" : {
+			"coding" : [
+			  {
+				"system" : "http://bpd.bcbs.com/CodeSystem/BCBSServiceAreaCS",
+				"code" : "L",
+				"display" : "Licensed"
+			  }
+			]
+		  }
+		},
+		{
+		  "url" : "http://bpd.bcbs.com/StructureDefinition/officelanguage",
+		  "valueCodeableConcept" : {
+			"coding" : [
+			  {
+				"system" : "urn:ietf:bcp:47",
+				"code" : "en",
+				"display" : "English"
+			  }
+			]
+		  }
+		},
+		{
+		  "url" : "http://bpd.bcbs.com/StructureDefinition/officelanguage",
+		  "valueCodeableConcept" : {
+			"coding" : [
+			  {
+				"system" : "urn:ietf:bcp:47",
+				"code" : "it",
+				"display" : "Italy"
+			  }
+			]
+		  }
+		}
+	  ]
 }

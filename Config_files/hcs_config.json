@@ -1,74 +1,137 @@
 {
     "Source_Schema":
-        {
-            "fields": [
+    {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "resourceType",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          },
+          {
+            "name": "id",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          },
+          {
+            "name": "meta",
+            "type": {
+              "type": "struct",
+              "fields": [
                 {
-                    "metadata": {},
-                    "name": "resourceType",
-                    "nullable": true,
-                    "type": "string"
+                  "name": "versionId",
+                  "type": "string",
+                  "nullable": true,
+                  "metadata": {}
                 },
                 {
-                    "metadata": {},
-                    "name": "id",
-                    "nullable": true,
-                    "type": "string"
+                  "name": "lastUpdated",
+                  "type": "string",
+                  "nullable": true,
+                  "metadata": {}
                 },
                 {
-                    "metadata": {},
-                    "name": "meta",
-                    "nullable": true,
-                    "type": {
-                        "fields": [
-                            {
-                                "metadata": {},
-                                "name": "versionId",
-                                "nullable": true,
-                                "type": "string"
-                            },
-                            {
-                                "metadata": {},
-                                "name": "lastUpdated",
-                                "nullable": true,
-                                "type": "string"
-                            },
-                            {
-                                "metadata": {},
-                                "name": "profile",
-                                "nullable": true,
-                                "type": {
-                                    "containsNull": true,
-                                    "elementType": "string",
-                                    "type": "array"
-                                }
-                            },
-                            {
-                                "metadata": {},
-                                "name": "Features",
-                                "nullable": true,
-                                "type": {
-                                    "containsNull": true,
-                                    "elementType": "string",
-                                    "type": "array"
-                                }
-                            },
-                            {
-                                "metadata": {},
-                                "name": "healthdata",
-                                "nullable": true,
-                                "type": {
-                                    "containsNull": true,
-                                    "elementType": "string",
-                                    "type": "array"
-                                }
-                            }
-                        ],
-                        "type": "struct"
-                    }
+                  "name": "profile",
+                  "type": {
+                    "type": "array",
+                    "elementType": "string",
+                    "containsNull": true
+                  },
+                  "nullable": true,
+                  "metadata": {}
+                },
+                {
+                  "name": "Features",
+                  "type": {
+                    "type": "array",
+                    "elementType": "string",
+                    "containsNull": true
+                  },
+                  "nullable": true,
+                  "metadata": {}
+                },
+                {
+                  "name": "healthdata",
+                  "type": {
+                    "type": "array",
+                    "elementType": "string",
+                    "containsNull": true
+                  },
+                  "nullable": true,
+                  "metadata": {}
                 }
-            ],
-            "type": "struct"
-        },
+              ]
+            },
+            "nullable": true,
+            "metadata": {}
+          },
+          {
+            "name": "extension",
+            "type": {
+              "type": "array",
+              "elementType": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "url",
+                    "type": "string",
+                    "nullable": true,
+                    "metadata": {}
+                  },
+                  {
+                    "name": "valueCodeableConcept",
+                    "type": {
+                      "type": "struct",
+                      "fields": [
+                        {
+                          "name": "coding",
+                          "type": {
+                            "type": "array",
+                            "elementType": {
+                              "type": "struct",
+                              "fields": [
+                                {
+                                  "name": "system",
+                                  "type": "string",
+                                  "nullable": true,
+                                  "metadata": {}
+                                },
+                                {
+                                  "name": "code",
+                                  "type": "string",
+                                  "nullable": true,
+                                  "metadata": {}
+                                },
+                                {
+                                  "name": "display",
+                                  "type": "string",
+                                  "nullable": true,
+                                  "metadata": {}
+                                }
+                              ]
+                            },
+                            "containsNull": true
+                          },
+                          "nullable": true,
+                          "metadata": {}
+                        }
+                      ]
+                    },
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "containsNull": true
+            },
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
     "targetschema": ["resourceType", "id", "meta.versionId", "meta.lastUpdated", "meta.profile","meta.Features","meta.healthdata"],
     "explode_1": ["profile","Features","healthdata"]
+    
     }
