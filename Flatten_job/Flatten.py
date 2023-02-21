@@ -30,17 +30,20 @@ hcs_df.show(truncate=False)
 
 print('---------------------Target Schema-----------------')
 targetschema_dict = con["targetschemadict"]
-targetschema_df = hcs_df.select(*(targetschema_dict['1']))
-targetschema_df.show(truncate=False)
-
-print("-------------------------Explode Level 1------------------")
 explode_dict = con["explodedict"]
-for i in range(len(targetschema_dict)):
+
+for i in range(1,(len(targetschema_dict)+1)):
+    
+    hcs_df =hcs_df.select("*",*(targetschema_dict[f'{i}']))
+    hcs_df.show(truncate=False)
+
+    print("-------------------------Explode Level 1------------------")
+
+
     for column in explode_dict[f'{i}']:
-      if isinstance(targetschema_df.schema[column].dataType, ArrayType): 
-        targetschema_df = targetschema_df.withColumn(f"new_{column}",explode_outer(column)).drop(col(f"{column}"))
-      else if(isinstance(targetschema_df.schema[column].dataType,StructType)):
-            
-    targetschema_df.show(5)  
+        hcs_df = hcs_df.withColumn(f"new_{column}",explode_outer(column)).drop(col(f"{column}"))
+hcs_df.show(truncate=False) 
+print(hcs_df.count())       
+     
 
 
