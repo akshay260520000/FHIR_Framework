@@ -131,10 +131,35 @@
           }
         ]
       },
-    "targetschema1": ["resourceType", "id", "meta.versionId", "meta.lastUpdated", "meta.profile","meta.Features","meta.healthdata","extension"],
-    "explode_1": ["profile","Features","healthdata","extension"],
-    "targetschema2":["new_extension.url","new_extension.valueCodeableConcept.coding"],
-    "explode_2":["coding"]
+      "targetschemadict":
+      {
+        "1": [
+            "resourceType",
+            "id",
+            "meta.versionId",
+            "meta.lastUpdated",
+            "meta.profile",
+            "meta.Features",
+            "meta.healthdata",
+            "extension"
+        ],
+        "2": [
+            "new_extension.url",
+            "new_extension.valueCodeableConcept.coding"
+        ]
+    },
+    "explodedict":
+    {
+      "1": [
+          "profile",
+          "Features",
+          "healthdata",
+          "extension"
+      ],
+      "2": [
+          "coding"
+      ]
+    }
     
     
     

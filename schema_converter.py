@@ -11,9 +11,15 @@ StructField('valueCodeableConcept',\
 StructType([StructField('coding',ArrayType(StructType([StructField('system',StringType(),True),\
 StructField('code',StringType(),True),StructField('display',StringType(),True)])),True)]),True)])),True)])
 
-json_schema = json.dumps(schema.jsonValue(), indent=2)
+# json_schema = json.dumps(schema.jsonValue(), indent=2)
 
-print(json_schema)
+# print(json_schema)
+
+targetschemadict={"1":["resourceType", "id", "meta.versionId", "meta.lastUpdated", "meta.profile","meta.Features","meta.healthdata","extension"],'2':["new_extension.url","new_extension.valueCodeableConcept.coding"]}
+explodedict={"1":["profile","Features","healthdata","extension"],"2":["coding"]}  
+
+json_object = json.dumps(explodedict, indent = 4) 
+print(json_object)
 
 
 

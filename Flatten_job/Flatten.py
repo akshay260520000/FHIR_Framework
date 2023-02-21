@@ -29,23 +29,18 @@ hcs_df.printSchema()
 hcs_df.show(truncate=False)
 
 print('---------------------Target Schema-----------------')
-targetschema1 = con["targetschema1"]
-targetschema_df = hcs_df.select(*(targetschema1))
+targetschema_dict = con["targetschemadict"]
+targetschema_df = hcs_df.select(*(targetschema_dict['1']))
 targetschema_df.show(truncate=False)
 
 print("-------------------------Explode Level 1------------------")
-explode1 = con["explode_1"]
+explode_dict = con["explodedict"]
+for i in range(len(targetschema_dict)):
+    for column in explode_dict[f'{i}']:
+      if isinstance(targetschema_df.schema[column].dataType, ArrayType): 
+        targetschema_df = targetschema_df.withColumn(f"new_{column}",explode_outer(column)).drop(col(f"{column}"))
+      else if(isinstance(targetschema_df.schema[column].dataType,StructType)):
+            
+    targetschema_df.show(5)  
 
-for column in explode1:
-    targetschema_df = targetschema_df.withColumn(f"new_{column}",explode_outer(column)).drop(col(f"{column}"))
-targetschema_df.show(5)  
 
-# Targetschema2:
-targetschema2 = con["targetschema2"]
-targetschema_df=targetschema_df.select("*",*(targetschema2))
-targetschema_df.show()
-print("-------------------------Explode Level 2------------------")
-explode2 = con["explode_2"]
-for column in explode2:
-    targetschema_df = targetschema_df.withColumn(f"new_{column}",explode_outer(column)).drop(col(f"{column}"))
-targetschema_df.show(5)
