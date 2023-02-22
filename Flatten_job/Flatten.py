@@ -38,12 +38,13 @@ for i in range(1,(len(targetschema_dict)+1)):
     hcs_df.show(truncate=False)
 
     print("-------------------------Explode Level 1------------------")
-
-
-    for column in explode_dict[f'{i}']:
-        hcs_df = hcs_df.withColumn(f"new_{column}",explode_outer(column)).drop(col(f"{column}"))
-hcs_df.show(truncate=False) 
-print(hcs_df.count())       
+    
+    if(i<=len(explode_dict)):
+        for column in explode_dict[f'{i}']:
+            hcs_df = hcs_df.withColumn(f"new_{column}",explode_outer(column)).drop(col(f"{column}")).withColumnRenamed(f'new_{column}',f'{column}')
+        hcs_df.show(5) 
+print(hcs_df.count())
+print(hcs_df.columns)      
      
 
 

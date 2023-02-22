@@ -144,9 +144,14 @@
             "extension"
         ],
         "2": [
-            "new_extension.url",
-            "new_extension.valueCodeableConcept.coding"
-        ]
+            "extension.url",
+            "extension.valueCodeableConcept.coding"
+        ],
+        "3": [
+          "coding.system",
+          "coding.code",
+          "coding.display"
+      ]
     },
     "explodedict":
     {
