@@ -5,7 +5,8 @@ from pyspark import SparkContext
 from pyspark.sql.types import *
 import json
 from pyspark.sql.functions import explode, explode_outer, col, when, split,  \
-    concat_ws, collect_set, udf, element_at, to_date, lit, desc, dense_rank
+    concat_ws, collect_set, udf, element_at, to_date, lit, desc, dense_rank,\
+    monotonically_increasing_id
 
 spark = SparkSession.builder \
     .master("local[1]") \
@@ -17,14 +18,6 @@ with open('/workspaces/FHIR_Framework/Config_files/practioner_config.json') as c
 
 schema_temp = con["Source_Schema"]
 schema = StructType.fromJson(schema_temp)
-
-def ifSameColumn():
-    {
-       print("checking") 
-    }
-
-
-
 
 input_path ='/workspaces/FHIR_Framework/Input_data_files/practioner_json.json'
 
@@ -44,10 +37,12 @@ for i in range(1,(len(targetschema_dict)+1)):
     
     if(i<=len(explode_dict)):
         for column in explode_dict[f'{i}']:
-            hcs_df = hcs_df.withColumn(f"new_{column}",explode_outer(column)).drop(col(f"{column}")).withColumnRenamed(f'new_{column}',f'{column}')
-hcs_df.show(5) 
-print(hcs_df.count())
-print(hcs_df.columns)      
+            hcs_df = hcs_df.withColumn(f"new_{column}",explode_outer(column)).\
+                drop(col(f"{column}")).withColumnRenamed(f'new_{column}',f'{column}')
+print("______Final_________")
+hcs_df.show(5)
+
+      
      
 
 
