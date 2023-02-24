@@ -18,6 +18,10 @@ with open('/workspaces/FHIR_Framework/Config_files/practioner_config.json') as c
 schema_temp = con["Source_Schema"]
 schema = StructType.fromJson(schema_temp)
 
+def ifSameColumn():
+    {
+       print("checking") 
+    }
 
 
 
@@ -36,7 +40,7 @@ for i in range(1,(len(targetschema_dict)+1)):
     
     hcs_df =hcs_df.select("*",*(targetschema_dict[f'{i}']))
     
-
+    
     
     if(i<=len(explode_dict)):
         for column in explode_dict[f'{i}']:

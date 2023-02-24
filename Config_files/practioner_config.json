@@ -325,6 +325,22 @@
                 },
                 "nullable": true,
                 "metadata": {}
+              },
+              {
+                "name": "period",
+                "type": {
+                  "type": "struct",
+                  "fields": [
+                    {
+                      "name": "end",
+                      "type": "string",
+                      "nullable": true,
+                      "metadata": {}
+                    }
+                  ]
+                },
+                "nullable": true,
+                "metadata": {}
               }
             ]
           },
@@ -407,7 +423,12 @@
             "name.suffix",
             "telecom.system",
             "telecom.value",
-            "telecom.use"
+            "telecom.use",
+            "qualification.extension",
+            "qualification.code",
+            "qualification.issuer",
+            "qualification.period"
+
             
             ],
         "3": [
