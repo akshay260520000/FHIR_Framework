@@ -1,3 +1,4 @@
+// Note: 
 {
     "Source_Schema":
     {
@@ -148,9 +149,9 @@
             "extension.valueCodeableConcept.coding"
         ],
         "3": [
-          "coding.system",
-          "coding.code",
-          "coding.display"
+          "extension_valueCodeableConcept_coding.system",
+          "extension_valueCodeableConcept_coding.code",
+          "extension_valueCodeableConcept_coding.display"
       ]
     },
     "explodedict":
