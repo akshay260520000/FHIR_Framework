@@ -13,13 +13,13 @@ spark = SparkSession.builder \
     .appName("PySpark Read JSON") \
     .getOrCreate()
 
-with open('/workspaces/FHIR_Framework/Config_files/practioner_config.json') as config_file:
+with open('/workspaces/FHIR_Framework/Config_files/org_config.json') as config_file:
     con=json.load(config_file)
 
 schema_temp = con["Source_Schema"]
 schema = StructType.fromJson(schema_temp)
 
-input_path ='/workspaces/FHIR_Framework/Input_data_files/practioner_json.json'
+input_path ='/workspaces/FHIR_Framework/Input_data_files/org_json.json'
 
 hcs_df = spark.read.schema(schema).format("json").option("multiLine", "true").load(input_path)
 hcs_df.printSchema()
@@ -41,8 +41,3 @@ for i in range(1,(len(targetschema_dict)+1)):
                 drop(col(f"{column}")).withColumnRenamed(f'new_{column}',f'{column}')
 print("______Final_________")
 hcs_df.show(5)
-
-      
-     
-
-

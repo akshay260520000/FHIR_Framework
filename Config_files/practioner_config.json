@@ -673,6 +673,7 @@
             "meta.profile",
             "text.status",
             "text.div",
+
             "identifier",
             "name",
             "telecom",
@@ -683,6 +684,7 @@
         "2": [
             "identifier.type",
             "identifier.value",
+            
             "identifier.type.coding",
             "name.family",
             "name.given",

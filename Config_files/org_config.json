@@ -386,16 +386,37 @@
             "id",
             "meta.versionId",
             "meta.lastUpdated",
+            "meta.source",
             "meta.profile",
-            "meta.Features",
-            "meta.healthdata",
-            "extension"
+            "text.status",
+            "text.div",
+            "extension",
+            "identifier",
+            "name",
+            "telecom",
+            "address"
         ],
         "2": [
+            "extension.extension",
             "extension.url",
-            "extension.valueCodeableConcept.coding"
+            "identifier.type",
+            "identifier.value",
+            "telecom.system",
+            "telecom.value",
+            "telecom.use",
+            "address.use",
+            "address.type",
+            "address.line",
+            "address.city",
+            "address.district",
+            "address.state",
+            "address.postalCode",
+            "address.country"
         ],
         "3": [
+          "extension.url",
+          "extension.valueReference",
+          "extension.valueCodeableConcept.coding",
           "coding.system",
           "coding.code",
           "coding.display"
@@ -405,15 +426,15 @@
     {
       "1": [
           "profile",
-          "Features",
-          "healthdata",
-          "extension"
+          "extension",
+          "identifier",
+          "telecom",
+          "address"
       ],
       "2": [
-          "coding"
+          "coding",
+          "line"
+          
       ]
     }
-    
-    
-    
-    }
+}
