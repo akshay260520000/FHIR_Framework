@@ -399,7 +399,7 @@
         "2": [
             "extension.extension",
             "extension.url",
-            "identifier.type",
+            "identifier.type.coding",
             "identifier.value",
             "telecom.system",
             "telecom.value",
