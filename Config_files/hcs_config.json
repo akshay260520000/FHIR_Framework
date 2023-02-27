@@ -1,4 +1,3 @@
-// Note: 
 {
     "Source_Schema":
     {
@@ -157,13 +156,13 @@
     "explodedict":
     {
       "1": [
-          "profile",
-          "Features",
-          "healthdata",
+          "meta_profile",
+          "meta_Features",
+          "meta_healthdata",
           "extension"
       ],
       "2": [
-          "coding"
+          "extension_valueCodeableConcept_coding"
       ]
     }
     

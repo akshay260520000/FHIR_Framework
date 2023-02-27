@@ -21,7 +21,7 @@ schema = StructType.fromJson(schema_temp)
 
 input_path ='/workspaces/FHIR_Framework/Input_data_files/hcs_json.json'
 
-hcs_df = spark.read.schema(schema).format("json").option("multiLine", "true").load(input_path)
+df = spark.read.schema(schema).format("json").option("multiLine", "true").load(input_path)
 
 
 print('---------------------Target Schema-----------------')
@@ -30,27 +30,30 @@ explode_dict = con["explodedict"]
 
 for i in range(1,(len(targetschema_dict)+1)):
     
-    hcs_df =hcs_df.select("*",*(targetschema_dict[f'{i}']))
+    df =df.select("*",*(targetschema_dict[f'{i}']))
 
                 
     if(i<=len(explode_dict)):
         for column in explode_dict[f'{i}']:
-            hcs_df = hcs_df.withColumn(f"new_{column}",explode_outer(column)).\
+            df = df.withColumn(f"new_{column}",explode_outer(column)).\
                 drop(col(f"{column}")).withColumnRenamed(f'new_{column}',f'{column}')
 print("______Final_________")
-hcs_df.show(5)
-hcs_df.printSchema()
+df.show(5)
+df.printSchema()
 
 ## Things to do
 
-## DO manual testing of json data and also try to explode manually
+## DO manual testing of json data and also try to explode manually..
 
 ## solve that __ problem..
 
-## Alter the dictionaries.abs
+## Alter the dictionaries.abs..
 
 ## Deine the target schema 
 
 ## Make code resource name free..
 
 ## Make a note on config file that how it is going to work.. that is bounding some rules..
+
+## use df.write here..
+

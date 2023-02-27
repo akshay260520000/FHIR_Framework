@@ -673,7 +673,6 @@
             "meta.profile",
             "text.status",
             "text.div",
-
             "identifier",
             "name",
             "telecom",
@@ -684,7 +683,6 @@
         "2": [
             "identifier.type",
             "identifier.value",
-            
             "identifier.type.coding",
             "name.family",
             "name.given",
@@ -694,22 +692,47 @@
             "telecom.use",
             "qualification.extension",
             "qualification.code",
-            "qualification.issuer",
-            "qualification.period"
-
-            
+            "qualification.issuer.reference",
+            "qualification.period.end",
+            "communication.coding"
             ],
         "3": [
-          "coding.system",
-          "coding.code",
-          "coding.display"
-          
+          "identifier_type_coding.system",
+          "identifier_type_coding.code",
+          "identifier_type_coding.display",
+          "qualification_extension.url",
+          "qualification_extension.valueCode",
+          "qualification_code.extension",
+          "qualification_code.coding",
+          "communication_coding.system",
+          "communication_coding.code",
+          "communication_coding.display"
+      ],
+      "4": [
+        "qualification_code_extension.url",
+        "qualification_code_extension.valueBoolean",
+        "qualification_code_extension.extension",
+        "qualification_code_coding.system",
+        "qualification_code_coding.code",
+        "qualification_code_coding.display"
+
+      ],
+      "5":
+      [
+        "qualification_code_extension_extension.url",
+        "qualification_code_extension_extension.valueCode",
+        "qualification_code_extension_extension.valueCodeableConcept.coding"
+      ],
+      "6":[
+        "qualification_code_extension_extension_valueCodeableConcept_coding.system",
+        "qualification_code_extension_extension_valueCodeableConcept_coding.code",
+        "qualification_code_extension_extension_valueCodeableConcept_coding.display"
       ]
     },
     "explodedict":
     {
       "1": [
-          "profile",
+          "meta_profile",
           "identifier",
           "name",
           "telecom",
@@ -717,13 +740,24 @@
           "communication"
       ],
       "2": [
-          "coding",
-          "given",
-          "suffix"
+          "identifier_type_coding",
+          "name_given",
+          "name_suffix",
+          "qualification_extension",
+          "communication_coding"
+          
           
       ],
       "3":[
+        "qualification_code_extension",
+        "qualification_code_coding"
         
+      ],
+      "4":[
+        "qualification_code_extension_extension"
+      ],
+      "5":[
+        "qualification_code_extension_extension_valueCodeableConcept_coding"
       ]
     }
 }
