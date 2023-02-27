@@ -52,3 +52,5 @@ hcs_df.printSchema()
 ## Deine the target schema 
 
 ## Make code resource name free..
+
+## Make a note on config file that how it is going to work.. that is bounding some rules..
