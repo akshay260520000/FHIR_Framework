@@ -663,7 +663,40 @@
     }
   ]
 },
-  "struct_explode_dict":
+
+  "array_column_dict":
+  {
+    "1": [
+        "meta_profile",
+        "identifier",
+        "name",
+        "telecom",
+        "qualification",
+        "communication"
+    ],
+    "2": [
+        "identifier_type_coding",
+        "name_given",
+        "name_suffix",
+        "qualification_extension",
+        "communication_coding"
+        
+        
+    ],
+    "3":[
+      "qualification_code_extension",
+      "qualification_code_coding"
+      
+    ],
+    "4":[
+      "qualification_code_extension_extension"
+    ],
+    "5":[
+      "qualification_code_extension_extension_valueCodeableConcept_coding"
+    ]
+  },
+
+  "struct_column_dict":
       {
         "1": [
             "resourceType",
@@ -724,37 +757,7 @@
         "qualification_code_extension_extension_valueCodeableConcept_coding.display"
       ]
     },
-    "array_explode_dict":
-    {
-      "1": [
-          "meta_profile",
-          "identifier",
-          "name",
-          "telecom",
-          "qualification",
-          "communication"
-      ],
-      "2": [
-          "identifier_type_coding",
-          "name_given",
-          "name_suffix",
-          "qualification_extension",
-          "communication_coding"
-          
-          
-      ],
-      "3":[
-        "qualification_code_extension",
-        "qualification_code_coding"
-        
-      ],
-      "4":[
-        "qualification_code_extension_extension"
-      ],
-      "5":[
-        "qualification_code_extension_extension_valueCodeableConcept_coding"
-      ]
-    },
+    
     "final_target_schema":
     [
       "gender",

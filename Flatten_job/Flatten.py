@@ -11,11 +11,15 @@ spark = SparkSession.builder \
     .master("local[1]") \
     .appName("PySpark Read JSON") \
     .getOrCreate()
-with open('/workspaces/FHIR_Framework/Config_files/hcs_config.json') as config_file:
+
+Input_File=input("Enter The name of Input file or Input Folder: ")
+Config_File=input("Enter the name of Config_File or Config Folder: ")
+
+with open(f'/workspaces/FHIR_Framework/Config_files/{Config_File}') as config_file:
     con=json.load(config_file)
 schema_temp = con["Source_Schema"]
 schema = StructType.fromJson(schema_temp)
-input_path ='/workspaces/FHIR_Framework/Input_data_files/hcs_json.json'
+input_path =f'/workspaces/FHIR_Framework/Input_data_files/{Input_File}'  
 df = spark.read.schema(schema).format("json").option("multiLine", "true").load(input_path)
 
 def Addcolumns(df,colums):
@@ -24,9 +28,8 @@ def Addcolumns(df,colums):
         df=df.withColumn(f'{newvalue}',col(colm))
     return df
 
-print('---------------------Target Schema-----------------')
-struct_explode_dict = con["struct_explode_dict"]
-array_explode_dict = con["array_explode_dict"]
+struct_explode_dict = con["struct_column_dict"]
+array_explode_dict = con["array_column_dict"]
 for i in range(1,(len(struct_explode_dict)+1)):
     
     df=Addcolumns(df,struct_explode_dict[f'{i}'])            
@@ -37,4 +40,6 @@ for i in range(1,(len(struct_explode_dict)+1)):
 final_target_schema=con["final_target_schema"]
 df=df.select(*final_target_schema)
 df.show()
-df.write.mode("overwrite").csv('/workspaces/FHIR_Framework/Output/practioner.csv', header=True)
+
+Output_Path=Input_File.split('.')[0]
+df.write.mode("overwrite").parquet(f'/workspaces/FHIR_Framework/Output/{Output_Path}')

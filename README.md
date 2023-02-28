@@ -36,6 +36,138 @@ This framework is designed to make it easy to flatten JSON files that conform to
 			
 		]
 	},
+}
+
+```
+- It's Source schema would be:
+
+```
+      {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "resourceType",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          },
+          {
+            "name": "id",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          },
+          {
+            "name": "meta",
+            "type": {
+              "type": "struct",
+              "fields": [
+                {
+                  "name": "versionId",
+                  "type": "string",
+                  "nullable": true,
+                  "metadata": {}
+                },
+                {
+                  "name": "lastUpdated",
+                  "type": "string",
+                  "nullable": true,
+                  "metadata": {}
+                },
+                {
+                  "name": "profile",
+                  "type": {
+                    "type": "array",
+                    "elementType": "string",
+                    "containsNull": true
+                  },
+                  "nullable": true,
+                  "metadata": {}
+                },
+                {
+                  "name": "Features",
+                  "type": {
+                    "type": "array",
+                    "elementType": "string",
+                    "containsNull": true
+                  },
+                  "nullable": true,
+                  "metadata": {}
+                },
+                {
+                  "name": "healthdata",
+                  "type": {
+                    "type": "array",
+                    "elementType": "string",
+                    "containsNull": true
+                  },
+                  "nullable": true,
+                  "metadata": {}
+                }
+              ]
+            },
+            "nullable": true,
+            "metadata": {}
+          }
+        }
+ ```
+ - Above schema consist some elements which are of Array Type and some elements are of struct type
+ - All Elements Which are of Struct Type and are not Nested should Be called directly In struct_explode_dict with key 1 and value will be array consiting af all elements which are nested at level 1
+ - Similarly elements which are of type array and are nested in struct are might not be nested, but are array should be called in array_explode_dict with key 1
+ - Elemnts which are nested in struct should be called using ('.') dot notation and remember all ('.') will be replaced by ( _ ) during next iteration
+ - Struct types which are nested at 2nd level should be included in struct_explode_dict at with key 2. and value will be array which consist  nested structs at 2nd level
+
+### Example to Generate struct_column_dict
+```
+{
+        "1": [
+            "resourceType",
+            "id",
+            "meta.versionId",
+            "meta.lastUpdated",
+            "meta.profile",
+            "meta.Features",
+            "meta.healthdata"
+        ]
+    }
+```
+### Similarly add array elements in array_column_dict with proper key values which matches the nested levels 
+- Anything which is nested in some another element whould be called with ( _ ) attached to previous element for example
+- see this.
+```
+{
+      "1": [
+          "meta_profile",
+          "meta_Features",
+          "meta_healthdata",
+      ]
+    }
+
+```
+
+# Example 2 (Lets  Make it more complicated)
+```
+{
+	"resourceType": "HealthcareService",
+	"id": "283-hs04HealthCareServiceNewPatientAcceptingNeg",
+	"meta": {
+		"versionId": "1",
+		"lastUpdated": "2022-08-25T14:56:40.090-05:00",
+		"profile": [
+			"http://bpd.bcbs.com/StructureDefinition/bpd-healthcareservice-plan-submission",
+			"http://bpd.bcbs.com/StructureDefinition/"
+		],
+		"Features":[
+			"This is trial",
+			"Just trying",
+			"Testing replicacy"
+		],
+		"healthdata":[
+			"health check",
+			"This is only check"
+			
+		]
+	},
 	"extension" : [
 		{
 		  "url" : "http://bpd.bcbs.com/StructureDefinition/geocodereturn",
@@ -224,13 +356,8 @@ This framework is designed to make it easy to flatten JSON files that conform to
         ]
       }
  ```
- - Above schema consist some elements which are of Array Type and some elements are of struct type
- - All Elements Which are of Struct Type and are not Nested should Be called directly In struct_explode_dict with key 1 and value will be array consiting af all elements which are nested at level 1
- - Similarly elements which are of type array and are nested in struct are might not be nested, but are array should be called in array_explode_dict with key 1
- - Elemnts which are nested in struct should be called using ('.') dot notation and remember all ('.') will be replaced by ( _ ) during next iteration
- - Struct types which are nested at 2nd level should be included in struct_explode_dict at with key 2. and value will be array which consist  nested structs at 2nd level
 
-### Example to Generate struct_explode_dict
+### Example to Generate struct_column_dict
 ```
 {
         "1": [
@@ -254,7 +381,7 @@ This framework is designed to make it easy to flatten JSON files that conform to
       ]
     }
 ```
-### Similarly add array elements in array_explode_dict with proper key values which matches the nested levels 
+### Similarly add array elements in array_column_dict with proper key values which matches the nested levels 
 - Anything which is nested in some another element whould be called with ( _ ) attached to previous element for example
 - see this.
 ```
@@ -271,7 +398,7 @@ This framework is designed to make it easy to flatten JSON files that conform to
     }
 
 ```
-- If you want more examples with more nested structures and more compplex json files then you can look into Config_files folder.
+- If you want more examples with more nested structures and more compplex json files then you can refer Config_files folder.
 
 ## Features
 
