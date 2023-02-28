@@ -224,6 +224,53 @@ This framework is designed to make it easy to flatten JSON files that conform to
         ]
       }
  ```
+ - Above schema consist some elements which are of Array Type and some elements are of struct type
+ - All Elements Which are of Struct Type and are not Nested should Be called directly In struct_explode_dict with key 1 and value will be array consiting af all elements which are nested at level 1
+ - Similarly elements which are of type array and are nested in struct are might not be nested, but are array should be called in array_explode_dict with key 1
+ - Elemnts which are nested in struct should be called using ('.') dot notation and remember all ('.') will be replaced by ( _ ) during next iteration
+ - Struct types which are nested at 2nd level should be included in struct_explode_dict at with key 2. and value will be array which consist  nested structs at 2nd level
+
+### Example to Generate struct_explode_dict
+```
+{
+        "1": [
+            "resourceType",
+            "id",
+            "meta.versionId",
+            "meta.lastUpdated",
+            "meta.profile",
+            "meta.Features",
+            "meta.healthdata"
+            
+        ],
+        "2": [
+            "extension.url",
+            "extension.valueCodeableConcept.coding"
+        ],
+        "3": [
+          "extension_valueCodeableConcept_coding.system",
+          "extension_valueCodeableConcept_coding.code",
+          "extension_valueCodeableConcept_coding.display"
+      ]
+    }
+```
+### Similarly add array elements in array_explode_dict with proper key values which matches the nested levels 
+- Anything which is nested in some another element whould be called with ( _ ) attached to previous element for example
+- see this.
+```
+{
+      "1": [
+          "meta_profile",
+          "meta_Features",
+          "meta_healthdata",
+          "extension"
+      ],
+      "2": [
+          "extension_valueCodeableConcept_coding"
+      ]
+    }
+
+```
 
 ## Features
 
@@ -238,6 +285,4 @@ The FHIR Framework for Flattening JSON Files includes the following features:
 
 We welcome contributions to the FHIR Framework for Flattening JSON Files! If you would like to contribute, please follow our [contribution guidelines](CONTRIBUTING.md) and submit a pull request.
 
-## License
 
-The FHIR Framework for Flattening JSON Files is licensed under the [MIT License](LICENSE).
