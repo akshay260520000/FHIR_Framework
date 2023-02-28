@@ -37,3 +37,4 @@ for i in range(1,(len(struct_explode_dict)+1)):
 final_target_schema=con["final_target_schema"]
 df=df.select(*final_target_schema)
 df.show()
+df.write.mode("overwrite").csv('/workspaces/FHIR_Framework/Output/practioner.csv', header=True)
