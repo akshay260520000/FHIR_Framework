@@ -131,7 +131,7 @@
           }
         ]
       },
-      "targetschemadict":
+      "struct_explode_dict":
       {
         "1": [
             "resourceType",
@@ -140,8 +140,7 @@
             "meta.lastUpdated",
             "meta.profile",
             "meta.Features",
-            "meta.healthdata",
-            "extension"
+            "meta.healthdata"
         ],
         "2": [
             "extension.url",
@@ -153,7 +152,7 @@
           "extension_valueCodeableConcept_coding.display"
       ]
     },
-    "explodedict":
+    "array_explode_dict":
     {
       "1": [
           "meta_profile",
@@ -164,8 +163,19 @@
       "2": [
           "extension_valueCodeableConcept_coding"
       ]
-    }
-    
-    
-    
-    }
+    },
+    "final_target_schema":
+    [
+      "resourceType",
+      "id",
+      "meta_versionId",
+      "meta_lastUpdated",
+      "meta_profile",
+      "meta_Features",
+      "meta_healthdata",
+      "extension_url",
+      "extension_valueCodeableConcept_coding_system",
+      "extension_valueCodeableConcept_coding_code",
+      "extension_valueCodeableConcept_coding_display"
+    ]
+  }
