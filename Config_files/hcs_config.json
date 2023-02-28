@@ -131,7 +131,8 @@
           }
         ]
       },
-      "struct_explode_dict":
+
+      "struct_column_dict":
       {
         "1": [
             "resourceType",
@@ -151,19 +152,21 @@
           "extension_valueCodeableConcept_coding.code",
           "extension_valueCodeableConcept_coding.display"
       ]
-    },
-    "array_explode_dict":
-    {
-      "1": [
-          "meta_profile",
-          "meta_Features",
-          "meta_healthdata",
-          "extension"
-      ],
-      "2": [
-          "extension_valueCodeableConcept_coding"
-      ]
-    },
+    },  
+
+    "array_column_dict":
+      {
+        "1": [
+            "meta_profile",
+            "meta_Features",
+            "meta_healthdata",
+            "extension"
+        ],
+        "2": [
+            "extension_valueCodeableConcept_coding"
+        ]
+      },
+
     "final_target_schema":
     [
       "resourceType",
