@@ -43,17 +43,10 @@ df.printSchema()
 
 ## Things to do
 
-## DO manual testing of json data and also try to explode manually..
-
+## Make code resource name free..
 ## solve that __ problem..
 
-## Alter the dictionaries.abs..
-
-## Deine the target schema 
-
-## Make code resource name free..
-
+## Alter the dictionaries.abs..## Deine the target schema
 ## Make a note on config file that how it is going to work.. that is bounding some rules..
-
-## use df.write here..
-
+## use df.write here.
+## DO manual testing of json data and also try to explode manually..

@@ -663,7 +663,7 @@
     }
   ]
 },
-  "targetschemadict":
+  "struct_explode_dict":
       {
         "1": [
             "resourceType",
@@ -673,12 +673,7 @@
             "meta.profile",
             "text.status",
             "text.div",
-            "identifier",
-            "name",
-            "telecom",
-            "gender",
-            "qualification",
-            "communication"
+            "gender"
         ],
         "2": [
             "identifier.type",
@@ -729,7 +724,7 @@
         "qualification_code_extension_extension_valueCodeableConcept_coding.display"
       ]
     },
-    "explodedict":
+    "array_explode_dict":
     {
       "1": [
           "meta_profile",
@@ -759,5 +754,43 @@
       "5":[
         "qualification_code_extension_extension_valueCodeableConcept_coding"
       ]
-    }
+    },
+    "final_target_schema":
+    [
+      "gender",
+      "id",
+      "resourceType",
+      "meta_versionId",
+      "meta_lastUpdated",
+      "text_status",
+      "text_div",
+      "meta_profile",
+      "identifier_value",
+      "name_family",
+      "telecom_system",
+      "telecom_value",
+      "telecom_use",
+      "qualification_issuer_reference",
+      "qualification_period_end",
+      "name_given",
+      "name_suffix",
+      "identifier_type_coding_system", 
+      "identifier_type_coding_code", 
+      "identifier_type_coding_display",
+      "qualification_extension_url",
+      "qualification_extension_valueCode",
+      "communication_coding_system",
+      "communication_coding_code",
+      "communication_coding_display",
+      "qualification_code_extension_url",
+      "qualification_code_extension_valueBoolean",
+      "qualification_code_coding_system",
+      "qualification_code_coding_code",
+      "qualification_code_coding_display",
+      "qualification_code_extension_extension_url",
+      "qualification_code_extension_extension_valueCode",
+      "qualification_code_extension_extension_valueCodeableConcept_coding_system",
+      "qualification_code_extension_extension_valueCodeableConcept_coding_code",
+      "qualification_code_extension_extension_valueCodeableConcept_coding_display"
+    ]
 }
