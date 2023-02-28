@@ -40,7 +40,7 @@ This framework is designed to make it easy to flatten JSON files that conform to
 }
 
 ```
-- It's Source schema would be:
+## It's Source Schema:
 
 ```
       {
@@ -222,7 +222,7 @@ This framework is designed to make it easy to flatten JSON files that conform to
 }
 
 ```
-- It's Source schema would be:
+## It's Source Schema
 
 ```
 {
