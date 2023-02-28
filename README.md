@@ -112,10 +112,10 @@ This framework is designed to make it easy to flatten JSON files that conform to
         }
  ```
  - Above schema consist some elements which are of Array Type and some elements are of struct type
- - All Elements Which are of Struct Type and are not Nested should Be called directly In struct_explode_dict with key 1 and value will be array consiting af all elements which are nested at level 1
- - Similarly elements which are of type array and are nested in struct are might not be nested, but are array should be called in array_explode_dict with key 1
+ - All Elements Which are of Struct Type and are not Nested should Be called directly In struct_column_dict with key 1 and value will be array consiting af all elements which are nested at level 1
+ - Similarly elements which are of type array and are nested in struct are might not be nested, but are array should be called in array_column_dict with key 1
  - Elemnts which are nested in struct should be called using ('.') dot notation and remember all ('.') will be replaced by ( _ ) during next iteration
- - Struct types which are nested at 2nd level should be included in struct_explode_dict at with key 2. and value will be array which consist  nested structs at 2nd level
+ - Struct types which are nested at 2nd level should be included in struct_column_dict at with key 2. and value will be array which consist  nested structs at 2nd level
 
 ### Example to Generate struct_column_dict
 ```
