@@ -271,6 +271,7 @@ This framework is designed to make it easy to flatten JSON files that conform to
     }
 
 ```
+- If you want more examples with more nested structures and more compplex json files then you can look into Config_files folder.
 
 ## Features
 
