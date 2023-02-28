@@ -11,9 +11,10 @@ This framework is designed to make it easy to flatten JSON files that conform to
 - Add Input Json file as Data file in Input_Files folder
 - Configure the config.json file in COnfig_files folder
 
-### Step to create COnfig File:
+### Step to create Config File:
 - Create your pyspark schema and then dump it in json format and then Paste it  under Source Schema field.
 - For Example: This is example input json file for healthcare data
+# Example 1
 ```
 {
 	"resourceType": "HealthcareService",
