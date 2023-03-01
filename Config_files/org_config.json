@@ -382,60 +382,23 @@
       "struct_column_dict":
       {
         "1": [
-            "resourceType",
-            "id",
-            "meta.versionId",
-            "meta.lastUpdated",
-            "meta.source",
-            "meta.profile",
-            "text.status",
-            "text.div",
-            "extension",
-            "identifier",
-            "name",
-            "telecom",
-            "address"
+            
         ],
         "2": [
-            "extension.extension",
-            "extension.url",
-            "identifier.type.coding",
-            "identifier.value",
-            "telecom.system",
-            "telecom.value",
-            "telecom.use",
-            "address.use",
-            "address.type",
-            "address.line",
-            "address.city",
-            "address.district",
-            "address.state",
-            "address.postalCode",
-            "address.country"
+            
         ],
         "3": [
-          "extension.url",
-          "extension.valueReference",
-          "extension.valueCodeableConcept.coding",
-          "coding.system",
-          "coding.code",
-          "coding.display"
+          
       ]
       
     },
-    array_column_dict":
+    "array_column_dict":
     {
       "1": [
-          "profile",
-          "extension",
-          "identifier",
-          "telecom",
-          "address"
+         
       ],
       "2": [
-          "extension",
-          "coding",
-          "line"
+          
           
       ],
       "3":[
