@@ -121,7 +121,20 @@
       "metadata": {}
     }
   ]
-}
+},
+
+"array_column_dict":
+    {
+        "1": [
+            "meta_profile",
+            "extension",
+            "identifier"
+        ]
+            
+       
+
+    },
+
 
  "struct_column_dict":
       {
@@ -144,19 +157,8 @@
         ]
        
 
-    } 
-
-"arr_column_dict":
-    {
-        "1": [
-            "meta_profile",
-            "extension",
-            "identifier"
-        ]
-            
-       
-
     }
+
 }
 
 
