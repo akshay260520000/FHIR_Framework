@@ -129,6 +129,9 @@
             "meta_profile",
             "extension",
             "identifier"
+        ],
+        "2":[
+          
         ]
             
        
@@ -136,7 +139,7 @@
     },
 
 
- "struct_column_dict":
+ "intermediate_column_dict":
       {
         "1": [
             "resourcetype",

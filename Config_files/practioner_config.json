@@ -693,10 +693,13 @@
     ],
     "5":[
       "qualification_code_extension_extension_valueCodeableConcept_coding"
+    ],
+    "6":[
+
     ]
   },
 
-  "struct_column_dict":
+  "intermediate_column_dict":
       {
         "1": [
             "resourceType",

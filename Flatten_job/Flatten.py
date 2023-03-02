@@ -28,17 +28,17 @@ def Addcolumns(df,colums):
         df=df.withColumn(f'{newvalue}',col(colm))
     return df
 
-struct_explode_dict = con["struct_column_dict"]
+struct_explode_dict = con["intermediate_column_dict"]
 array_explode_dict = con["array_column_dict"]
+
 for i in range(1,(len(struct_explode_dict)+1)):
-    
     df=Addcolumns(df,struct_explode_dict[f'{i}'])            
-    if(i<=len(array_explode_dict)):
-        for column in array_explode_dict[f'{i}']:
-            df = df.withColumn(f"new_{column}",explode_outer(column)).\
-                drop(col(f"{column}")).withColumnRenamed(f'new_{column}',f'{column}')
-# final_target_schema=con["final_target_schema"]
-# df=df.select(*final_target_schema)
+    for column in array_explode_dict[f'{i}']:
+        df = df.withColumn(f"new_{column}",explode_outer(column)).\
+        drop(col(f"{column}")).withColumnRenamed(f'new_{column}',f'{column}')
+
+final_target_schema=con["final_target_schema"]
+df=df.select(*final_target_schema)
 df.show()
 print(df.count())
 Output_Path=Input_File.split('.')[0]

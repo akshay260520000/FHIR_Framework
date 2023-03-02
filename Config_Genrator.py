@@ -24,6 +24,8 @@ schema = schema = StructType([StructField('address', ArrayType(StructType([Struc
                   StructField('value', StringType(), True)]), True), True)])
 json_schema = json.dumps(schema.jsonValue(), indent=2)
 
+
+
 print(json_schema)
 
 # targetschemadict={"1":["resourceType", "id", "meta.versionId", "meta.lastUpdated", "meta.profile","meta.Features","meta.healthdata","extension"],'2':["new_extension.url","new_extension.valueCodeableConcept.coding"]}
