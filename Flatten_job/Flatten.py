@@ -37,9 +37,9 @@ for i in range(1,(len(struct_explode_dict)+1)):
         for column in array_explode_dict[f'{i}']:
             df = df.withColumn(f"new_{column}",explode_outer(column)).\
                 drop(col(f"{column}")).withColumnRenamed(f'new_{column}',f'{column}')
-final_target_schema=con["final_target_schema"]
-df=df.select(*final_target_schema)
+# final_target_schema=con["final_target_schema"]
+# df=df.select(*final_target_schema)
 df.show()
-
+print(df.count())
 Output_Path=Input_File.split('.')[0]
 df.write.mode("overwrite").parquet(f'/workspaces/FHIR_Framework/Output/{Output_Path}')

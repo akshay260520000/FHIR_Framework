@@ -382,28 +382,64 @@
       "struct_column_dict":
       {
         "1": [
-            
+            "resourcetype",
+            "id",
+            "meta.versionId",
+            "meta.lastUpdated",
+            "meta.source",
+            "meta.profile",
+            "text.status",
+            "text.div",
+            "name"
         ],
+
         "2": [
-            
+            "extension.extension",
+            "extension.url",
+            "identifier.type.coding",
+            "identifier.value",
+            "telecom.system",
+            "telecom.value",
+            "telecom.use",
+            "address.use",
+            "address.type",
+            "address.city",
+            "address.district",
+            "address.state",
+            "address.postalCode",
+            "address.country",
+            "address.line"
         ],
         "3": [
-          
-      ]
-      
+            "extension_extension.valueReference.reference",
+            "extension_extension.valuePeriod.start",
+            "extension_extension.valuePeriod.end",
+            "extension_extension.valueCodeableConcept.coding",
+            "extension_extension.url",
+            "identifier_type_coding.system",
+            "identifier_type_coding.code",
+            "identifier_type_coding.display"
+
+        ]
+
     },
-    "array_column_dict":
+
+"array_column_dict":
     {
-      "1": [
-         
-      ],
-      "2": [
-          
-          
-      ],
-      "3":[
-             
-      ]
-      
+        "1": [
+            "meta_profile",
+            "extension",
+            "identifier",
+            "telecom",
+            "address"
+        ],
+
+        "2": [
+            "extension_extension",
+            "identifier_type_coding",
+            "address_line"
+        ]
+
     }
+
 }
