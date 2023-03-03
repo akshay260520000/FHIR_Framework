@@ -1,1 +1,3 @@
 pyspark
+
+s3://bpd-datalake-qape-zone/tmp/FHIR_Framework-main/Config_files/Practitioner_config.json
