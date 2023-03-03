@@ -1,3 +1,5 @@
 pyspark
 
-s3://bpd-datalake-qape-zone/tmp/FHIR_Framework-main/Config_files/Practitioner_config.json
+parts = s3_path.split("/", 3)
+bucket_name = parts[2]
+key_name = parts[3]
