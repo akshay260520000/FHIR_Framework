@@ -1,62 +1,42 @@
 {
     "Source_Schema":
     {
-        "type": "struct",
-        "fields": [
-          {
-            "name": "resourceType",
-            "type": "string",
-            "nullable": true,
-            "metadata": {}
-          },
-          {
-            "name": "id",
-            "type": "string",
-            "nullable": true,
-            "metadata": {}
-          },
-          {
-            "name": "meta",
-            "type": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "category",
+          "type": {
+            "type": "array",
+            "elementType": {
               "type": "struct",
               "fields": [
                 {
-                  "name": "versionId",
-                  "type": "string",
-                  "nullable": true,
-                  "metadata": {}
-                },
-                {
-                  "name": "lastUpdated",
-                  "type": "string",
-                  "nullable": true,
-                  "metadata": {}
-                },
-                {
-                  "name": "profile",
+                  "name": "coding",
                   "type": {
                     "type": "array",
-                    "elementType": "string",
-                    "containsNull": true
-                  },
-                  "nullable": true,
-                  "metadata": {}
-                },
-                {
-                  "name": "Features",
-                  "type": {
-                    "type": "array",
-                    "elementType": "string",
-                    "containsNull": true
-                  },
-                  "nullable": true,
-                  "metadata": {}
-                },
-                {
-                  "name": "healthdata",
-                  "type": {
-                    "type": "array",
-                    "elementType": "string",
+                    "elementType": {
+                      "type": "struct",
+                      "fields": [
+                        {
+                          "name": "code",
+                          "type": "string",
+                          "nullable": true,
+                          "metadata": {}
+                        },
+                        {
+                          "name": "display",
+                          "type": "string",
+                          "nullable": true,
+                          "metadata": {}
+                        },
+                        {
+                          "name": "system",
+                          "type": "string",
+                          "nullable": true,
+                          "metadata": {}
+                        }
+                      ]
+                    },
                     "containsNull": true
                   },
                   "nullable": true,
@@ -64,93 +44,196 @@
                 }
               ]
             },
-            "nullable": true,
-            "metadata": {}
+            "containsNull": true
           },
-          {
-            "name": "extension",
-            "type": {
-              "type": "array",
-              "elementType": {
-                "type": "struct",
-                "fields": [
-                  {
-                    "name": "url",
-                    "type": "string",
-                    "nullable": true,
-                    "metadata": {}
-                  },
-                  {
-                    "name": "valueCodeableConcept",
-                    "type": {
+          "nullable": true,
+          "metadata": {}
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "nullable": true,
+          "metadata": {}
+        },
+        {
+          "name": "meta",
+          "type": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "lastUpdated",
+                "type": "string",
+                "nullable": true,
+                "metadata": {}
+              },
+              {
+                "name": "profile",
+                "type": {
+                  "type": "array",
+                  "elementType": "string",
+                  "containsNull": true
+                },
+                "nullable": true,
+                "metadata": {}
+              },
+              {
+                "name": "source",
+                "type": "string",
+                "nullable": true,
+                "metadata": {}
+              },
+              {
+                "name": "versionId",
+                "type": "string",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "nullable": true,
+          "metadata": {}
+        },
+        {
+          "name": "resourceType",
+          "type": "string",
+          "nullable": true,
+          "metadata": {}
+        },
+        {
+          "name": "specialty",
+          "type": {
+            "type": "array",
+            "elementType": {
+              "type": "struct",
+              "fields": [
+                {
+                  "name": "coding",
+                  "type": {
+                    "type": "array",
+                    "elementType": {
                       "type": "struct",
                       "fields": [
                         {
-                          "name": "coding",
-                          "type": {
-                            "type": "array",
-                            "elementType": {
-                              "type": "struct",
-                              "fields": [
-                                {
-                                  "name": "system",
-                                  "type": "string",
-                                  "nullable": true,
-                                  "metadata": {}
-                                },
-                                {
-                                  "name": "code",
-                                  "type": "string",
-                                  "nullable": true,
-                                  "metadata": {}
-                                },
-                                {
-                                  "name": "display",
-                                  "type": "string",
-                                  "nullable": true,
-                                  "metadata": {}
-                                }
-                              ]
-                            },
-                            "containsNull": true
-                          },
+                          "name": "code",
+                          "type": "string",
+                          "nullable": true,
+                          "metadata": {}
+                        },
+                        {
+                          "name": "display",
+                          "type": "string",
+                          "nullable": true,
+                          "metadata": {}
+                        },
+                        {
+                          "name": "system",
+                          "type": "string",
                           "nullable": true,
                           "metadata": {}
                         }
                       ]
                     },
-                    "nullable": true,
-                    "metadata": {}
-                  }
-                ]
-              },
-              "containsNull": true
+                    "containsNull": true
+                  },
+                  "nullable": true,
+                  "metadata": {}
+                }
+              ]
             },
-            "nullable": true,
-            "metadata": {}
-          }
-        ]
-      },
+            "containsNull": true
+          },
+          "nullable": true,
+          "metadata": {}
+        },
+        {
+          "name": "text",
+          "type": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "div",
+                "type": "string",
+                "nullable": true,
+                "metadata": {}
+              },
+              {
+                "name": "status",
+                "type": "string",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "nullable": true,
+          "metadata": {}
+        },
+        {
+          "name": "type",
+          "type": {
+            "type": "array",
+            "elementType": {
+              "type": "struct",
+              "fields": [
+                {
+                  "name": "coding",
+                  "type": {
+                    "type": "array",
+                    "elementType": {
+                      "type": "struct",
+                      "fields": [
+                        {
+                          "name": "code",
+                          "type": "string",
+                          "nullable": true,
+                          "metadata": {}
+                        },
+                        {
+                          "name": "display",
+                          "type": "string",
+                          "nullable": true,
+                          "metadata": {}
+                        },
+                        {
+                          "name": "system",
+                          "type": "string",
+                          "nullable": true,
+                          "metadata": {}
+                        }
+                      ]
+                    },
+                    "containsNull": true
+                  },
+                  "nullable": true,
+                  "metadata": {}
+                }
+              ]
+            },
+            "containsNull": true
+          },
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    },
 
-      "struct_column_dict":
+      "intermediate_column_dict":
       {
         "1": [
             "resourceType",
             "id",
             "meta.versionId",
             "meta.lastUpdated",
-            "meta.profile",
-            "meta.Features",
-            "meta.healthdata"
+            "meta.source",
+            "meta.profile"
         ],
         "2": [
-            "extension.url",
-            "extension.valueCodeableConcept.coding"
+            "location.reference",
+            "category.coding"
         ],
         "3": [
-          "extension_valueCodeableConcept_coding.system",
-          "extension_valueCodeableConcept_coding.code",
-          "extension_valueCodeableConcept_coding.display"
+          "category_coding.system",
+          "category_coding.code",
+          "category_coding.display"
       ]
     },  
 
@@ -158,32 +241,51 @@
       {
         "1": [
             "meta_profile",
-            "meta_Features",
-            "meta_healthdata",
-            "extension"
+            "category",
+            "location"
         ],
         "2": [
-            "extension_valueCodeableConcept_coding"
+            
+            "category_coding"
         ],
 
         "3":
         [
-
+          
         ]
-      },
 
+      
+      },
     "final_target_schema":
     [
-      "resourceType",
+    
       "id",
-      "meta_versionId",
-      "meta_lastUpdated",
-      "meta_profile",
-      "meta_Features",
-      "meta_healthdata",
-      "extension_url",
-      "extension_valueCodeableConcept_coding_system",
-      "extension_valueCodeableConcept_coding_code",
-      "extension_valueCodeableConcept_coding_display"
-    ]
+      "resourcetype",
+      "versionId",
+      "MEDICARE_ESSENTIAL_HOSPITAL",
+      "TRANSLATOR_SERVICE_IND",
+      "DISCLAIMER_CODE",
+      "PROV_CHRTC_CD"
+    ],
+
+  "column_mapping" : 
+  {
+    "column_name1" : "PROV_CHRTC_CD",
+    "Mapping_rule1" : {
+      "source_column" : "hcservice_type_coding_system",
+      "match_value": "http://bpd.bcbs.com/CodeSystem/BCBSProviderCharacteristicsCS",
+      "target_value" : "hcservice_type_coding_code"
+    },
+  
+  
+    "column_name2" : "Name",
+    "Mapping_rule2" : {
+      "source_column" : "extension_valueCodeableConcept_coding_system",
+      "match_value": "first_name", 
+      "target_value" : "extension_valueCodeableConcept_coding_display"
+    }
+  
+
   }
+}
+

@@ -1,0 +1,652 @@
+{
+  "Source_Schema":
+    {
+      
+        "type": "struct",
+        "fields": [
+          {
+            "name": "code",
+            "type": {
+              "type": "array",
+              "elementType": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "coding",
+                    "type": {
+                      "type": "array",
+                      "elementType": {
+                        "type": "struct",
+                        "fields": [
+                          {
+                            "name": "code",
+                            "type": "string",
+                            "nullable": true,
+                            "metadata": {}
+                          },
+                          {
+                            "name": "display",
+                            "type": "string",
+                            "nullable": true,
+                            "metadata": {}
+                          },
+                          {
+                            "name": "system",
+                            "type": "string",
+                            "nullable": true,
+                            "metadata": {}
+                          }
+                        ]
+                      },
+                      "containsNull": true
+                    },
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "containsNull": true
+            },
+            "nullable": true,
+            "metadata": {}
+          },
+          {
+            "name": "extension",
+            "type": {
+              "type": "array",
+              "elementType": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "extension",
+                    "type": {
+                      "type": "array",
+                      "elementType": {
+                        "type": "struct",
+                        "fields": [
+                          {
+                            "name": "url",
+                            "type": "string",
+                            "nullable": true,
+                            "metadata": {}
+                          },
+                          {
+                            "name": "valueBoolean",
+                            "type": "boolean",
+                            "nullable": true,
+                            "metadata": {}
+                          },
+                          {
+                            "name": "valueCodeableConcept",
+                            "type": {
+                              "type": "struct",
+                              "fields": [
+                                {
+                                  "name": "coding",
+                                  "type": {
+                                    "type": "array",
+                                    "elementType": {
+                                      "type": "struct",
+                                      "fields": [
+                                        {
+                                          "name": "code",
+                                          "type": "string",
+                                          "nullable": true,
+                                          "metadata": {}
+                                        },
+                                        {
+                                          "name": "display",
+                                          "type": "string",
+                                          "nullable": true,
+                                          "metadata": {}
+                                        },
+                                        {
+                                          "name": "system",
+                                          "type": "string",
+                                          "nullable": true,
+                                          "metadata": {}
+                                        }
+                                      ]
+                                    },
+                                    "containsNull": true
+                                  },
+                                  "nullable": true,
+                                  "metadata": {}
+                                }
+                              ]
+                            },
+                            "nullable": true,
+                            "metadata": {}
+                          },
+                          {
+                            "name": "valueIdentifier",
+                            "type": {
+                              "type": "struct",
+                              "fields": [
+                                {
+                                  "name": "value",
+                                  "type": "string",
+                                  "nullable": true,
+                                  "metadata": {}
+                                }
+                              ]
+                            },
+                            "nullable": true,
+                            "metadata": {}
+                          },
+                          {
+                            "name": "valueReference",
+                            "type": {
+                              "type": "struct",
+                              "fields": [
+                                {
+                                  "name": "reference",
+                                  "type": "string",
+                                  "nullable": true,
+                                  "metadata": {}
+                                }
+                              ]
+                            },
+                            "nullable": true,
+                            "metadata": {}
+                          }
+                        ]
+                      },
+                      "containsNull": true
+                    },
+                    "nullable": true,
+                    "metadata": {}
+                  },
+                  {
+                    "name": "url",
+                    "type": "string",
+                    "nullable": true,
+                    "metadata": {}
+                  },
+                  {
+                    "name": "valueBoolean",
+                    "type": "boolean",
+                    "nullable": true,
+                    "metadata": {}
+                  },
+                  {
+                    "name": "valueCodeableConcept",
+                    "type": {
+                      "type": "struct",
+                      "fields": [
+                        {
+                          "name": "coding",
+                          "type": {
+                            "type": "array",
+                            "elementType": {
+                              "type": "struct",
+                              "fields": [
+                                {
+                                  "name": "code",
+                                  "type": "string",
+                                  "nullable": true,
+                                  "metadata": {}
+                                },
+                                {
+                                  "name": "display",
+                                  "type": "string",
+                                  "nullable": true,
+                                  "metadata": {}
+                                },
+                                {
+                                  "name": "system",
+                                  "type": "string",
+                                  "nullable": true,
+                                  "metadata": {}
+                                }
+                              ]
+                            },
+                            "containsNull": true
+                          },
+                          "nullable": true,
+                          "metadata": {}
+                        }
+                      ]
+                    },
+                    "nullable": true,
+                    "metadata": {}
+                  },
+                  {
+                    "name": "valueReference",
+                    "type": {
+                      "type": "struct",
+                      "fields": [
+                        {
+                          "name": "reference",
+                          "type": "string",
+                          "nullable": true,
+                          "metadata": {}
+                        }
+                      ]
+                    },
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "containsNull": true
+            },
+            "nullable": true,
+            "metadata": {}
+          },
+          {
+            "name": "healthcareService",
+            "type": {
+              "type": "array",
+              "elementType": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "reference",
+                    "type": "string",
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "containsNull": true
+            },
+            "nullable": true,
+            "metadata": {}
+          },
+          {
+            "name": "id",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          },
+          {
+            "name": "identifier",
+            "type": {
+              "type": "array",
+              "elementType": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "type",
+                    "type": {
+                      "type": "struct",
+                      "fields": [
+                        {
+                          "name": "coding",
+                          "type": {
+                            "type": "array",
+                            "elementType": {
+                              "type": "struct",
+                              "fields": [
+                                {
+                                  "name": "code",
+                                  "type": "string",
+                                  "nullable": true,
+                                  "metadata": {}
+                                },
+                                {
+                                  "name": "display",
+                                  "type": "string",
+                                  "nullable": true,
+                                  "metadata": {}
+                                },
+                                {
+                                  "name": "system",
+                                  "type": "string",
+                                  "nullable": true,
+                                  "metadata": {}
+                                }
+                              ]
+                            },
+                            "containsNull": true
+                          },
+                          "nullable": true,
+                          "metadata": {}
+                        }
+                      ]
+                    },
+                    "nullable": true,
+                    "metadata": {}
+                  },
+                  {
+                    "name": "value",
+                    "type": "string",
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "containsNull": true
+            },
+            "nullable": true,
+            "metadata": {}
+          },
+          {
+            "name": "location",
+            "type": {
+              "type": "array",
+              "elementType": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "reference",
+                    "type": "string",
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "containsNull": true
+            },
+            "nullable": true,
+            "metadata": {}
+          },
+          {
+            "name": "meta",
+            "type": {
+              "type": "struct",
+              "fields": [
+                {
+                  "name": "lastUpdated",
+                  "type": "string",
+                  "nullable": true,
+                  "metadata": {}
+                },
+                {
+                  "name": "profile",
+                  "type": {
+                    "type": "array",
+                    "elementType": "string",
+                    "containsNull": true
+                  },
+                  "nullable": true,
+                  "metadata": {}
+                },
+                {
+                  "name": "source",
+                  "type": "string",
+                  "nullable": true,
+                  "metadata": {}
+                },
+                {
+                  "name": "versionId",
+                  "type": "string",
+                  "nullable": true,
+                  "metadata": {}
+                }
+              ]
+            },
+            "nullable": true,
+            "metadata": {}
+          },
+          {
+            "name": "participatingOrganization",
+            "type": {
+              "type": "struct",
+              "fields": [
+                {
+                  "name": "reference",
+                  "type": "string",
+                  "nullable": true,
+                  "metadata": {}
+                }
+              ]
+            },
+            "nullable": true,
+            "metadata": {}
+          },
+          {
+            "name": "period",
+            "type": {
+              "type": "struct",
+              "fields": [
+                {
+                  "name": "end",
+                  "type": "string",
+                  "nullable": true,
+                  "metadata": {}
+                },
+                {
+                  "name": "start",
+                  "type": "string",
+                  "nullable": true,
+                  "metadata": {}
+                }
+              ]
+            },
+            "nullable": true,
+            "metadata": {}
+          },
+          {
+            "name": "resourceType",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          },
+          {
+            "name": "active",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          },
+          {
+            "name": "search",
+            "type": {
+              "type": "struct",
+              "fields": [
+                {
+                  "name": "mode",
+                  "type": "string",
+                  "nullable": true,
+                  "metadata": {}
+                }
+              ]
+            },
+            "nullable": true,
+            "metadata": {}
+          },
+          {
+            "name": "specialty",
+            "type": {
+              "type": "array",
+              "elementType": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "coding",
+                    "type": {
+                      "type": "array",
+                      "elementType": {
+                        "type": "struct",
+                        "fields": [
+                          {
+                            "name": "code",
+                            "type": "string",
+                            "nullable": true,
+                            "metadata": {}
+                          },
+                          {
+                            "name": "display",
+                            "type": "string",
+                            "nullable": true,
+                            "metadata": {}
+                          },
+                          {
+                            "name": "system",
+                            "type": "string",
+                            "nullable": true,
+                            "metadata": {}
+                          }
+                        ]
+                      },
+                      "containsNull": true
+                    },
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "containsNull": true
+            },
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      
+    },
+    "intermediate_column_dict":
+    {
+      "1": [
+          "resourcetype",
+          "id",
+          "meta.versionId",
+          "meta.lastUpdated",
+          "meta.source",
+          "meta.profile",
+          "period.start",
+          "participatingOrganization.reference"
+      ],
+      "2": [
+          "extension.extension",
+          "extension.url",
+          "extension.valueBoolean",
+          "extension.valueReference.reference",
+          "code.coding",
+          "specialty.coding",
+          "location.reference",
+          "healthcareService.reference"
+      ],
+      "3": [
+          "extension_extension.url",
+          "extension_extension.valueBoolean",
+          "code_coding.system",
+          "code_coding.code",
+          "code_coding.display",
+          "specialty.coding.system",
+          "specialty.coding.code",
+          "specialty.coding.display"
+      ]
+    },
+    
+    "array_column_dict":
+    {
+      "1": [
+          "meta_profile",
+          "extension",
+          "code",
+          "specialty",
+          "location"
+      ],
+    
+      "2": [
+          "extension_extension",
+          "code_coding",
+          "specialty_coding"
+      ],
+    
+      "3":[
+         
+      ]
+    
+    },
+    "non_explode_arr_col_dict":
+    {
+      "key1":"healthcareService",
+      "key2":"code"
+
+    },
+"intermediate_target_schema":
+[
+  "id",
+  "identifier",
+  "meta",
+  "participatingOrganization",
+  "period",
+  "resourcetype",
+  "active",
+  "search",
+  "meta_versionId",
+  "meta_lastUpdated",
+  "meta_source",
+  "period_start",
+  "participatingOrganization_reference",
+  "meta_profile",
+  "extension",
+  "code",
+  "specialty",
+  "location",
+  "healthcareService",
+  "extension_url",
+  "extension_valueBoolean",
+  "extension_valueReference_reference",
+  "location_reference",
+  "healthcareService_reference",
+  "extension_extension",
+  "code_coding",
+  "specialty_coding",
+  "extension_extension_url",
+  "extension_extension_valueBoolean",
+  "code_coding_system",
+  "code_coding_code",
+  "code_coding_display",
+  "specialty_coding_system",
+  "specialty_coding_code",
+  "specialty_coding_display"
+],
+"final_target_schema":[ 
+"Version_id",   
+"DISPLAY_INDICATOR",
+"licensee_id",
+"network_id",
+"PROVIDER_CONTRACT_STATUS",
+"MEMB_SELF_ATRBTN_ACPTNC_IND",
+"PROVIDER_TERMINATION_CODE"
+],
+"column_mapping" : 
+{
+
+  "column_name1":"DISPLAY_INDICATOR",
+  "Mapping_rule1":{
+    "source_column":"extension_extension_url",
+    "match_value":"displayIndicatorProvider",
+    "target_column":"extension_extension_valueBoolean"  
+  },
+  "column_name2":"licensee_id",
+  "Mapping_rule2":{
+    "source_column":"extension_url",
+    "match_value":"http://bpd.bcbs.com/StructureDefinition/licenseereference",
+    "target_column":"extension_valueReference_reference"  
+  },
+  "column_name3":"network_id",
+  "Mapping_rule3":{
+    "source_column":"extension_url",
+    "match_value":"http://bpd.bcbs.com/StructureDefinition/networkreference",
+    "target_column":"extension_valueReference_reference"  
+  },
+  "column_name4":"PROVIDER_CONTRACT_STATUS",
+  "Mapping_rule4":{
+    "source_column":"extension_url",
+    "match_value":"http://bpd.bcbs.com/StructureDefinition/provcontract",
+    "target_column":"extension_valueBoolean"  
+  },
+  "column_name5":"MEMB_SELF_ATRBTN_ACPTNC_IND",
+  "Mapping_rule5":{
+    "source_column":"extension_extension_url",
+    "match_value":"providerAcceptsMemberSelectAttributionIndicator",
+    "target_column":"extension_extension_valueBoolean"  
+  },
+  "column_name6": "Version_id",
+  "Mapping_rule6": {
+    "target_column": "id"
+  },
+  "column_name7":"PROVIDER_TERMINATION_CODE",
+  "Mapping_rule7":{
+    "source_column":"extension_valueCodeableConcept_coding_system",
+    "match_value":"http://bpd.bcbs.com/CodeSystem/BCBSProviderTerminationReasonCS",
+    "target_column":"extension_valueCodeableConcept_coding_code"  
+  }
+
+}
+}
+
