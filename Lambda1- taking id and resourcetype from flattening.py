@@ -1,0 +1,478 @@
+import numpy as np
+import itertools
+import pandas as pd
+import json
+import os
+import boto3
+import pyarrow as pa
+import pyarrow.parquet as pq
+import awswrangler as wr
+from botocore.exceptions import ClientError
+import uuid
+from pytz import timezone 
+from datetime import datetime
+
+LIST_TYPES = (list, tuple)
+key = None
+
+
+
+
+try:
+    s3 = boto3.client("s3")
+    code_config_bucket = os.environ["code_config_bucket"]
+    code_config_key = os.environ["code_config_key"]
+    code_configuration = s3.get_object(Bucket=code_config_bucket, Key=code_config_key)
+    code_config = code_configuration["Body"].read().decode("utf-8")
+    code_config_data = json.loads(code_config)  
+
+    error_codes = {}
+    for error in code_config_data['error_codes']:
+        error_codes[error['message']] = error['code']
+
+except Exception as e:
+    print("Error in code Configuration", e)
+
+
+# Exception classes
+class ExecutionError(Exception):
+    def __init__(self, code, message):
+        self.code = code
+        self.message = message
+        super().__init__(f"Error code: {code}, Message: {message}")
+
+
+class InvalidJSONException(ExecutionError):
+    def __init__(self, message):
+        super().__init__(error_codes["Invalid_JSON"], message)
+
+
+class JSONTooLargeException(ExecutionError):
+    def __init__(self, message):
+        super().__init__(error_codes["JSON_too_large"], message)
+
+
+class InvalidConfigException(ExecutionError):
+    def __init__(self, message):
+        super().__init__(error_codes["Invalid_configuration"], message)
+
+
+class ColumnMappingInvalidException(ExecutionError):
+    def __init__(self, code, message):
+        super().__init__(code, message)
+
+
+class DuplicateColumnNamesException(ExecutionError):
+    def __init__(self, duplicate_names):
+        message = f"Duplicate column names found: {', '.join(duplicate_names)}"
+        super().__init__(error_codes["Duplicate_column_names"], message)
+
+
+class ReferenceColumnsMissingException(ExecutionError):
+    def __init__(self, column_name):
+        message = f"Column is missing for column name: {column_name}"
+        super().__init__(error_codes["Reference_columns_missing"], message)
+
+
+class TargetColumnMissingException(ExecutionError):
+    def __init__(self, column_name):
+        message = f"Target column is missing for column name: {column_name}"
+        super().__init__(error_codes["Reference_column_missing"], message)
+
+
+def send_failure_notification(e):
+    try:
+        client = boto3.client("sns")
+        status_message = f'Status: {"FINISHED_FAILURE"} \n Lambda_Run_ID: {str(uuid.uuid4())} \n Error: {e} \n Key: {key} '
+        topic_arn = os.environ["sns_topic_arn"]
+        subject = "FHIR Framework Status Notification"
+        result = client.publish(
+            TopicArn=topic_arn, Message=status_message, Subject=subject
+        )
+        if result["ResponseMetadata"]["HTTPStatusCode"] == 200:
+            print("Failure notification sent.")
+        exit()
+    except Exception as e:
+        print("Error occurred while sending failure notification:", e)
+
+
+def flatten(item, parents=(), join="_"):
+    for key, val in item.items():
+        path = parents + (key,)
+        key = str.join(join, path)
+
+        if isinstance(val, dict) and any(val):
+            yield from flatten(val, path, join)
+        elif isinstance(val, dict):
+            yield (key, None)
+        else:
+            yield (key, val)
+
+
+def explode(item):
+    lists = (
+        [(k, x) for x in v] if any(v) else [(k, None)]
+        for k, v in item.items()
+        if isinstance(v, LIST_TYPES)
+    )
+    combos = map(dict, itertools.product(*lists))
+    for combo in combos:
+        xitem = item.copy()
+        xitem.update(combo)
+        yield xitem
+
+
+def Flatten_Explode(item, join="_"):
+
+    for expl in explode(item):
+        flat = dict(flatten(expl, (), join))
+
+        items = filter(lambda x: isinstance(x, LIST_TYPES), flat.values())
+        for item in items:
+            yield from Flatten_Explode(flat, join)
+            break
+        else:
+            yield flat
+
+
+def convert_json_to_small_json(s3, input_bucket, input_file):
+    print("Creating Small Json files of input json....")
+    response = s3.get_object(Bucket=input_bucket, Key=input_file)
+    file_content = response["Body"].read().decode("utf-8")
+    data = json.loads(file_content)
+    small_json_data = {}
+    for key, value in data.items():
+        small_json_data[key] = {key: value}
+    return small_json_data
+
+
+def handle_exception(func):
+    def wrapper(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except ExecutionError as e:
+            print(f"Execution failed...")
+            print(f"Error Code: {e.code}, Message: {e.message}")
+            send_failure_notification(e)
+        except SystemExit as e:
+            print("Lambda function stopped due to an unhandled exception.")
+            send_failure_notification(e)
+        except Exception as e:
+            print("An unexpected error occurred:", e)
+            send_failure_notification(e)
+    return wrapper
+
+
+@handle_exception
+def move_data_to_row_bucket(
+    s3,
+    resource_id,
+    resource_type,
+    row_json_data_bucket_name,
+    input_bucket,
+    input_file,
+    row_json_data_key,
+    timestamp
+):
+    print("Moving data to row bucket...")
+    year = timestamp[:4]
+    month = timestamp[4:6]
+    day = timestamp[6:8]
+    hour = timestamp[8:10]
+    row_path = f"{row_json_data_key}{resource_type}/year={year}/month={month}/day={day}/hour={hour}/{resource_id}.json"
+    s3.copy_object(
+        Bucket=row_json_data_bucket_name,
+        Key=row_path,
+        CopySource={"Bucket": input_bucket, "Key": input_file},
+    )
+    s3.delete_object(Bucket=input_bucket, Key=input_file)
+    print(f"Row data loaded at: s3://{row_json_data_bucket_name}/{row_path}")
+
+
+@handle_exception
+def validate_input_json(s3, input_bucket, input_file):
+    try:
+        input_data = s3.get_object(Bucket=input_bucket, Key=input_file)
+        file_content = input_data["Body"].read().decode("utf-8")
+        input_data = json.loads(file_content)
+
+    except json.JSONDecodeError as e:
+        raise InvalidJSONException(f"Input JSON is not valid: {str(e)}")
+
+    except MemoryError:
+        raise JSONTooLargeException("Input JSON is too large to load.")
+
+    except ClientError as e:
+        if e.input_data["Error"]["Code"] == "NoSuchKey":
+            print("File not found:", input_file)
+        else:
+            print("S3 error:", e)
+
+@handle_exception
+def validate_config_json(
+    s3, fhir_tmp_bucket, config_file, input_bucket, input_file
+):
+    print("Config file validating...")
+    try:
+        config_response = s3.get_object(Bucket=fhir_tmp_bucket, Key=config_file)
+        file_content = config_response["Body"].read().decode("utf-8")
+        config_data = json.loads(file_content)
+    except json.JSONDecodeError as e:
+
+        raise InvalidConfigException(f"Config JSON is not valid: {str(e)}")
+    except Exception as e:
+        print("Config File Exception:", e)
+        raise Exception("Back to the end")
+    
+    column_names = []
+    duplicate_column_names = set()
+    try:
+        mappings = config_data["column_mapping"]
+    except:
+        raise ColumnMappingInvalidException(
+            error_codes["Mappings_array_missing"],
+            "Configuration of JSON is \
+                                            not valid,Column_mapping array not found in config.. ",
+        )
+
+    for value in mappings:
+        try:
+            column_name=value["column_name"].lower()
+            if column_name in column_names:
+                duplicate_column_names.add(column_name)
+            column_names.append(column_name)
+        except:
+            raise ColumnMappingInvalidException(
+                error_codes["Column_name_missing"],
+                f"Please ensure that column_name should be present in all mappings of config file...",
+            )
+
+        try:
+            mapping_rule = value["mapping_rule"]
+        except:
+             raise ColumnMappingInvalidException(
+                error_codes["Mapping_rule_document_missing"],
+                f"Configuration of JSON is not valid, MAPPING RULE document not defined where column name is {value['column_name']}  in Config"
+                )
+
+        try:
+            mapping_rule["reference_column"]
+        except:
+            raise ReferenceColumnsMissingException(
+                value['column_name']
+                )
+        
+        try:
+            value["column_type"]
+        except:
+            raise ColumnMappingInvalidException(
+                error_codes["Column_type_missing"],
+                f"Configuration of JSON is not valid,COLUMN TYPE is not defined where column name is {value['column_name']} in config file",
+            )
+
+    if ("match_value" in mapping_rule and "source_column" in mapping_rule) or ("match_value" not in mapping_rule and "source_column" not in mapping_rule):
+        pass
+    else:
+        raise ColumnMappingInvalidException(
+           error_codes["missing_source_column_and_match_value"],
+           f"Please ensure that both the 'source_column' and 'match_value' are either present or absent together for {value['column_name']}"
+           )  
+
+    if duplicate_column_names:
+        validate_input_json(s3, input_bucket, input_file)
+        raise DuplicateColumnNamesException(duplicate_column_names)
+    print("Config file validated successfully.")
+    return True
+
+
+@handle_exception
+def process_data(
+    s3,
+    input_bucket,
+    input_file,
+    fhir_tmp_bucket,
+    config_files_key,
+    fhir_tmp_data,
+    output_bucket,
+    row_json_data_key,
+    timestamp
+):
+    print("Processing input file....")
+    small_json = convert_json_to_small_json(s3, input_bucket, input_file)
+    df = pd.DataFrame()
+
+    print("Data Flattening in progess...")
+    for keys, value in small_json.items():
+        df2 = pd.DataFrame(list(Flatten_Explode(value)))
+        df = pd.concat([df, df2], axis=1)
+
+    resource_id=df["id"][0]
+    resource_type=df["resourceType"][0]
+
+    print(f"ID: {resource_id}")
+    print(f"Resource Type: {resource_type}")
+
+    config_file = f"{config_files_key}{resource_type}.json"
+    print(f"Config File Path: {config_file}")
+    try:
+        config_metadata = s3.get_object(Bucket=fhir_tmp_data, Key=config_file)
+    except Exception as e:
+        error_message = f"config file not present: {config_file}"
+        print(error_message)
+        send_failure_notification(error_message)
+    if (
+        "validated" in config_metadata["Metadata"]
+        and config_metadata["Metadata"]["validated"] == "true"
+    ):
+        print("Config file already validated. Skipping validation.")
+    else:
+        if validate_config_json(
+            s3, fhir_tmp_data, config_file, input_bucket, input_file
+        ):
+            s3.copy_object(
+                Bucket=fhir_tmp_data,
+                CopySource={"Bucket": fhir_tmp_data, "Key": config_file},
+                Key=config_file,
+                Metadata={"validated": "true"},
+                MetadataDirective="REPLACE",
+            )
+        else:
+            print("Config file validation failed.")
+
+    response = s3.get_object(Bucket=fhir_tmp_bucket, Key=config_file)
+    file_content = response["Body"].read().decode("utf-8")
+    config_data = json.loads(file_content)
+
+    aries = {}
+    print("Apping mapping on flatteded data")
+    mapping = config_data["column_mapping"]
+    cartesian = []
+    array_to_str_columns=[]
+    for value in mapping:
+        key_name = value["column_name"]
+        mapping_rule = value["mapping_rule"]
+        column_type = value["column_type"].lower()
+        if column_type == "nonarray":
+            cartesian.append(key_name)
+            array_to_str_columns.append(key_name)
+        else:
+            array_to_str_columns.append(key_name)
+
+        result_array = np.array([])
+        if (
+            "reference_column" in mapping_rule
+            and "match_value" not in mapping_rule
+            and "source_column" not in mapping_rule
+        ):
+            reference_column = mapping_rule["reference_column"]
+            if reference_column in df.columns:
+                for index, row in df.iterrows():
+                    if not pd.isna(row[reference_column]):
+                        result_array = np.append(result_array, row[reference_column])
+            result_array = np.unique(result_array)
+            aries[key_name] = result_array
+            continue
+        
+        source_column = mapping_rule["source_column"]
+        match_value = mapping_rule["match_value"]
+        reference_column = mapping_rule["reference_column"]
+
+        result_array = np.array([])
+
+        if source_column in df.columns and reference_column in df.columns:
+            for index, row in df.iterrows():
+                if row[source_column] == match_value:
+                    result_array = np.append(result_array, row[reference_column])
+        result_array = np.unique(result_array)
+        aries[key_name] = result_array
+    result_df = pd.DataFrame()
+    result_df = pd.DataFrame(columns=aries.keys(), index=[0])
+    for key, value in aries.items():
+        result_df.loc[0, key] = value.tolist()
+    result_df = result_df.apply(
+        lambda x: x.apply(
+            lambda y: np.nan if isinstance(y, list) and len(y) == 0 else y
+        )
+    )
+    print("Ready for cartesian product...")
+    for colname in cartesian:
+        result_df = result_df.explode(colname)
+    year = timestamp[:4]
+    month = timestamp[4:6]
+    day = timestamp[6:8]
+    hour = timestamp[8:10]
+    s3_output_path = (
+        f"{resource_type}/year={year}/month={month}/day={day}/hour={hour}/{resource_id}_{timestamp}.parquet"
+    )
+
+    result_df[array_to_str_columns] = result_df[array_to_str_columns].applymap(lambda x:"null" if x is None else '[' + ','.join(map(str,x)) + ']' if isinstance(x,(list,tuple,np.ndarray)) else str(x))
+    result_df = result_df.astype(str)
+
+    parquet_data = result_df.to_parquet(index=False)
+    print("Data is ready to load into target location...")
+    s3.put_object(Body=parquet_data, Bucket=output_bucket, Key=s3_output_path)
+    print("Execution successful! Data flattening and mapping completed...")
+    print(f"Flattened data loaded at: s3://{output_bucket}/{s3_output_path}")
+    move_data_to_row_bucket(
+        s3,
+        resource_id,
+        resource_type,
+        fhir_tmp_bucket,
+        input_bucket,
+        input_file,
+        row_json_data_key,
+        timestamp
+    )
+
+
+def lambda_handler(event, context):
+    global key
+    for record in event["Records"]:
+        body = json.loads(record["body"])
+        key = body["Records"][0]["s3"]["object"]["key"]
+        size = body["Records"][0]["s3"]["object"]["size"]
+    s3 = boto3.client("s3")
+    input_file = key
+    input_bucket = os.environ["input_bucket"]
+    output_bucket = os.environ["output_bucket"]
+    fhir_tmp_data = os.environ["fhir_tmp_data"]
+
+    row_json_data_key = os.environ["row_json_data_key"]
+    config_files_key = os.environ["config_files_key"]
+    big_json_temp_key = os.environ["big_json_temp_key"]
+
+    try:
+        if size > 30000:
+            tmp_key = big_json_temp_key + input_file
+            print()
+            s3.copy_object(
+                Bucket=fhir_tmp_data,
+                CopySource={"Bucket": input_bucket, "Key":input_file},
+                Key=tmp_key,
+            )
+            s3.delete_object(Bucket=input_bucket, Key=input_file)
+            print("File size is greater then threshold(30KB)")
+            print(f"Input file moved to {fhir_tmp_data}/{tmp_key}")
+            return
+    except Exception as e:
+        error_message = f"Unable to copy large file to {fhir_tmp_data}/{tmp_key}"
+        print(error_message)
+        send_failure_notification(error_message)
+
+    print(f"Key: {key}")
+    print("Input json file validating...")
+    validate_input_json(s3, input_bucket, key)
+    print("Input json file validated sucessfully...")
+    
+    timestamp = datetime.now(timezone("Asia/Kolkata")).strftime('%Y%m%d%H%M%S')
+    process_data(
+        s3,
+        input_bucket,
+        input_file,
+        fhir_tmp_data,
+        config_files_key,
+        fhir_tmp_data,
+        output_bucket,
+        row_json_data_key,
+        timestamp
+    )
